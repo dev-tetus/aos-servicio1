@@ -206,7 +206,7 @@ module.exports = {
         "tags": [
           "🔨 Trabajo"
         ],
-        "summary": "Modifica un trabajo identificado por si 'trabajoId'.",
+        "summary": "Modifica un trabajo identificado por su 'trabajoId'.",
         "description": "La siguiente tabla define los códigos de estado que puede devolver este endpoint\n| Status Code | Descripción         | Motivo                                        |\n| ------------| --------------------| ----------------------------------------------|\n| **200**     | OK                  | El trabajo existía y ha sido modificado       |\n| **404**     | NOT FOUND           | Si el trabajo no existe                       |\n| **412**     | PRECONDITION FAILED | Si el ETag proporcionado no está actualizado  |\n",
         "operationId": "trabajos_put",
         "parameters": [
