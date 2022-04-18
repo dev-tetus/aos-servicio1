@@ -2,12 +2,13 @@ const http_problem = require('./schemas/HTTP_Problem')
 const link = require('./schemas/Link')
 const trabajo = require('./schemas/Trabajo')
 
+
 module.exports = {
   "openapi": "3.0.2",
   "info": {
-    "title": "Subsistema encargado de la gestión de la planificación diaria de trabajos del taller.",
+    "title": "Subsistema_3 encargado de la gestión de la planificación diaria de trabajos del taller.",
     "version": "1.0.0",
-    "description": "*Gestion trabajos del taller*",
+    "description": "*Gestion de los trabajos del taller*",
     "license": {
       "name": "Apache 2.0",
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
@@ -19,10 +20,9 @@ module.exports = {
   },
   "servers": [
     {
-      "url": "https://api.example.io"
-    }  
+      "url": "https://api.example.io/api/v1"
+    }
   ],
-  "basePath": "/api/v1",
   "tags": [
     {
       "name": "🔨 Trabajo",
@@ -35,7 +35,7 @@ module.exports = {
         "summary": "Obtiene todos los Trabajos",
         "description": "La siguiente tabla define los códigos de estado que puede devolver este endpoint\n\n| Status Code | Descripción | Motivo                             |\n| ------------| ------------| -----------------------------------|\n| **200**     | OK          | Hay trabajos                       |\n| **404**     | NOT FOUND   | No hay ningún trabajo              |\n",
         "tags": [
-          "🔨 Trabajos"
+          "🔨 Trabajo"
         ],
         "operationId": "trabajos_cget",
         "parameters": [
@@ -62,8 +62,8 @@ module.exports = {
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "games": {
-                      "description": "trabajos de videojuegos",
+                    "trabajos": {
+                      "description": "trabajos de taller",
                       "type": "array",
                       "items": {
                         "$ref": "#/components/schemas/Trabajo"
@@ -116,7 +116,7 @@ module.exports = {
                   "$ref": "#/components/schemas/Trabajo"
                 },
                 "examples": {
-                  "gameExample": {
+                  "trabajoExample": {
                     "$ref": "#/components/examples/trabajo-example"
                   }
                 }
@@ -125,6 +125,24 @@ module.exports = {
           },
           "422": {
             "$ref": "#/components/responses/Response_422"
+          }
+        }
+      },
+      "options": {
+        "tags": [
+          "🔨 Trabajo"
+        ],
+        "summary": "Proporciona la lista de los métodos HTTP soportados por esta ruta.",
+        "description": "Devuelve una cabecera `Allow` con la lista de métodos HTTP soportados (separados por comas).",
+        "operationId": "trabajos_options",
+        "responses": {
+          "204": {
+            "description": "Una peticion ha salido exitosa, pero el cliente no necesita salir de la página actual. Devuelve la cabecera `Allow`",
+            "headers": {
+              "Allow": {
+                "$ref": "#/components/headers/Allow"
+              }
+            }
           }
         }
       }
@@ -156,7 +174,7 @@ module.exports = {
                   "$ref": "#/components/schemas/Trabajo"
                 },
                 "examples": {
-                  "gameExample": {
+                  "trabajoExample": {
                     "$ref": "#/components/examples/trabajo-example"
                   }
                 }
@@ -206,7 +224,7 @@ module.exports = {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Trabajo"
-                },
+                }
               }
             }
           },
@@ -215,6 +233,24 @@ module.exports = {
           },
           "412": {
             "$ref": "#/components/responses/Response_412"
+          }
+        }
+      },
+      "options": {
+        "tags": [
+          "🔨 Trabajo"
+        ],
+        "summary": "Proporciona la lista de los métodos HTTP soportados por esta ruta.",
+        "description": "Devuelve una cabecera `Allow` con la lista de métodos HTTP soportados (separados por comas).",
+        "operationId": "trabajos_options",
+        "responses": {
+          "204": {
+            "description": "Una peticion ha salido exitosa, pero el cliente no necesita salir de la página actual. Devuelve la cabecera `Allow`",
+            "headers": {
+              "Allow": {
+                "$ref": "#/components/headers/Allow"
+              }
+            }
           }
         }
       }
@@ -237,10 +273,14 @@ module.exports = {
               "required": [
                 "nombre",
                 "descripcion",
-                "fechaInicio",
-                "estado"
+                "estado",
+                "VIN"
               ],
               "properties": {
+                "VIN": {
+                  "description": "Número de identificación de 16 carácteres único del vehiculo gestionado por el subsistema_2",
+                  "type": "string"
+                },
                 "nombre": {
                   "description": "Nombre del trabajo",
                   "type": "string"
@@ -289,6 +329,10 @@ module.exports = {
             "schema": {
               "type": "object",
               "properties": {
+                "VIN": {
+                  "description": "Número de identificación de 16 carácteres único del vehiculo gestionado por el subsistema_2",
+                  "type": "string"
+                },
                 "nombre": {
                   "description": "Nombre del trabajo",
                   "type": "string"
@@ -346,7 +390,7 @@ module.exports = {
         "schema": {
           "type": "string"
         },
-        "example": "GET,DELETE,PUT,OPTIONS"
+        "example": "GET,DELETE,PUT,OPTIONS,POST"
       },
       "Location": {
         "description": "`URI` del nuevo recurso",
@@ -471,6 +515,7 @@ module.exports = {
         "value": {
           "trabajo": {
             "id": 789,
+            "VIN": "WAUZZZ7865723657",
             "nombre": "Cambio de aceite",
             "descripcion": "Cambio de aceite",
             "fechaInicio": "15-04-2022",
@@ -492,6 +537,7 @@ module.exports = {
       },
       "trabajoRB-example": {
         "value": {
+          "VIN": "PAUZZT7865678657",
           "nombre": "Revisión motor integral",
           "descripcion": "Revision integral del motor como parte de la revisión del vehículo",
           "fechaInicio": "12-06-2022",
@@ -523,7 +569,7 @@ module.exports = {
           "type": "https://httpstatuses.com/422",
           "title": "UNPROCESSABLE ENTITY",
           "status": 422,
-          "detail": "Falta alguno de los atributos obligatorios (nombre, empresa, version o año_publicación)",
+          "detail": "Falta alguno de los atributos obligatorios (nombre, descripcion, estado o VIN)",
           "instance": "about:blank"
         }
       }
