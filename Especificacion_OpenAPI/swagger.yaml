@@ -153,7 +153,7 @@ paths:
           
     put:
       tags: [ '🔨 Trabajo' ]
-      summary: Modifica un trabajo identificado por si 'trabajoId'.
+      summary: Modifica un trabajo identificado por su 'trabajoId'.
       description:  |
         La siguiente tabla define los códigos de estado que puede devolver este endpoint
         | Status Code | Descripción         | Motivo                                        |
