@@ -195,7 +195,7 @@ module.exports = {
         "operationId": "trabajos_delete",
         "responses": {
           "204": {
-            "description": "Videojuego eliminado"
+            "description": "Trabajo eliminado"
           },
           "404": {
             "$ref": "#/components/responses/Response_404"
