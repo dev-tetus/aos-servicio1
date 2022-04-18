@@ -12,6 +12,11 @@ Para levantar el servicio, hemos decidio utilizar Express como servidor web a tr
 - Utilizamos el módulo [swagger-ui-express] de Node que ofrece la posibilidad de servir la especificación a través de un fichero JSON.
 - Para la separación de los esquemas, a través de la creación de módulos con la sentencia _module.exports_, devolvemos objetos JSON los cuales serán inyectados en el fichero principal en su lugar correspondiente.
 
+# Git 
+Primero se debe clonar el repositorio en local 
+```bash
+git clone https://github.com/dev-tetus/susbsistema_3.git
+```
 # Docker
 ### 1. Directorio
 ```bash
@@ -19,15 +24,16 @@ cd susbsistema_3
 ```
 ### 2. Construcción de la imagen
 ```bash 
-docker build -t <subsistema_3>
+docker build -t subsistema_3 .
 ```
 ### 3. Levantar contenedor
+Asegurar primero que el puerto 80 está libre
 ```bash
-docker run -p <puerto_deseado>:3000 <subsistema_3>
+docker run -p 80:3000 subsistema_3
 ```
 ### 4. Navegador
 ```bash
-http://localhost:<puerto_deseado>/api/
+http://localhost:80/api/
 ```
    [swagger-ui-express]: <https://www.npmjs.com/package/swagger-ui-express>
    
