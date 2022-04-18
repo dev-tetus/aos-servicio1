@@ -12,7 +12,7 @@ Para levantar el servicio, hemos decidio utilizar Express como servidor web a tr
 - Utilizamos el módulo [swagger-ui-express] de Node que ofrece la posibilidad de servir la especificación a través de un fichero JSON.
 - Para la separación de los esquemas, a través de la creación de módulos con la sentencia _module.exports_, devolvemos objetos JSON los cuales serán inyectados en el fichero principal en su lugar correspondiente.
 
-*Nota: hemos entregado los ficheros de la especificación en formato YAML (se encuentran tanto en este repositorio, como entregados junto con el readme.txt que se adjunta en la entrega de moodle de la práctica). Aparte de esto se encuentran en formato JS para poder levantar el swagger UI con la especificación (siguiendo los pasos que se detallan debajo).
+*Nota: hemos entregado los ficheros de la especificación también en formato YAML (se encuentran tanto en este repositorio, como entregados junto con el readme.txt que se adjunta en la entrega de moodle de la práctica). Aparte de esto se encuentran en formato JS para poder levantar el swagger UI con la especificación (siguiendo los pasos que se detallan debajo).
 
 # Git 
 Primero se debe clonar el repositorio en local 
