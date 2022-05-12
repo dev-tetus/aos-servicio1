@@ -22,7 +22,8 @@ module.exports = {
         "VIN": {
           "description": "Número de identificación de 16 carácteres único del vehiculo gestionado por el subsistema_2",
           "type": "string",
-          "format": "byte"
+          "format": "byte",
+          "pattern": "[A-Ha-hJ-Nj-nPpR-Tr-tV-Yv-y1-9]{1}[0-9]{6}"
         },
         "nombre": {
           "description": "Nombre del trabajo",
@@ -52,7 +53,8 @@ module.exports = {
         "matricula": {
           "description": "Número de matrícula del vehículo en el cual se va a realizar el trabajo",
           "type": "string",
-          "format": "byte"
+          "format": "byte",
+          "pattern": "^[0-9]{1,4}(?!.*(LL|CH))[BCDFGHJKLMNPRSTVWXYZ]{3}"
         },
         "urgente": {
           "description": "Dice si el trabajo es urgente",
@@ -64,8 +66,12 @@ module.exports = {
           "readOnly": true,
           "type": "object",
           "properties": {
-            "parent": link,
-            "self": link
+            "parent": {
+              "$ref": "./Link.yaml"
+            },
+            "self": {
+              "$ref": "./Link.yaml"
+            }
           }
         }
       }

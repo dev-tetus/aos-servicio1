@@ -279,19 +279,24 @@ module.exports = {
               "properties": {
                 "VIN": {
                   "description": "Número de identificación de 16 carácteres único del vehiculo gestionado por el subsistema_2",
-                  "type": "string"
+                  "type": "string",
+                  "format": "byte",
+                  "pattern": "[A-Ha-hJ-Nj-nPpR-Tr-tV-Yv-y1-9]{1}[0-9]{6}"
                 },
                 "nombre": {
                   "description": "Nombre del trabajo",
-                  "type": "string"
+                  "type": "string",
+                  "format": "byte"
                 },
                 "descripcion": {
                   "description": "Descripción del trabajo",
-                  "type": "string"
+                  "type": "string",
+                  "format": "byte"
                 },
                 "fechaInicio": {
                   "description": "Indica la fecha de inicio del trabajo",
-                  "type": "string"
+                  "type": "string",
+                  "format": "date"
                 },
                 "estado": {
                   "description": "Estado del trabajo de entre cuatro opciones",
@@ -305,7 +310,9 @@ module.exports = {
                 },
                 "matricula": {
                   "description": "Número de matrícula del vehículo en el cual se va a realizar el trabajo",
-                  "type": "string"
+                  "type": "string",
+                  "format": "byte",
+                  "pattern": "^[0-9]{1,4}(?!.*(LL|CH))[BCDFGHJKLMNPRSTVWXYZ]{3}"
                 },
                 "urgente": {
                   "description": "Dice si el trabajo es urgente",
