@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+
+  mock: 
+    image: stoplight/prism:4
+    container_name: vehicles_mock
+    command: mock --cors -h 0.0.0.0 "/api/swagger.yaml"
+    ports:
+      - "4010:4010"
+    volumes:
+        - ./Especificacion_OpenAPI:/api:ro
+
+  especificacion_image:
+    image: swaggerapi/swagger-ui
+    container_name: especificacion_imagen
+    ports:
+        - 8000:8080
+    environment:
+        SWAGGER_JSON: /api/swagger.yaml
+    volumes:
+        - ./Especificacion_OpenAPI:/api:ro
+  proxy:
+    image: caddy:latest
+    container_name: vehicles_proxy
+    volumes:
+        - ./Caddyfile:/etc/caddy/Caddyfile
+        - ./caddy_data:/data
+    ports:
+        - "80:80"
+    depends_on:
+        - mock            

@@ -1,0 +1,11 @@
+http://localhost:80
+
+route /api/v1/* {
+        uri strip_prefix /api/v1
+        reverse_proxy mock:4010
+}
+
+# Redirección a Swagger-UI de la "página principal" desde http://localhost:80
+route / {
+        redir http://localhost:8000/
+}
