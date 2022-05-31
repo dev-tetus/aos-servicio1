@@ -1,5 +1,9 @@
 http://localhost:80
 
+route /api/v2/* {
+        uri strip_prefix /api/v2
+        reverse_proxy api-rest:5000
+}
 route /api/v1/* {
         uri strip_prefix /api/v1
         reverse_proxy mock:4010
