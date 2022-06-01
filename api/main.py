@@ -8,6 +8,10 @@ import routes #Registro de rutas
 def index():
     return 'Hola!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
 
+@app.route('/trabajo')
+def get_trabajo():
+    return 'Trabajo'
+
 if __name__ == '__main__':
     print('INICIANDO DB')
     db.init_db()
