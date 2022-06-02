@@ -30,7 +30,7 @@ class Trabajo(Base):
 
 #Terminar!!!!!
 def __repr__(self):
-    return f"User(id={self.id!r}, name={self.name!r}, fullname={self.fullname!r})"
+    return f"Trabajo(id={self.id!r}, vin={self.vin!r}, nombre={self.nombre!r}, descripcion={self.description!r}, fechaInicio={self.fechaInicio!r}, estado={self.estado!r}, matricula={self.matricula!r}, urgente={self.urgente!r})"
 
 
 #Engine para la creación de conexiones con bases de datos, es una factoria.
