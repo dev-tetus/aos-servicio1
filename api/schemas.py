@@ -1,37 +1,25 @@
-from datetime import date
-import enum
-from sqlalchemy import Column
-from sqlalchemy import ForeignKey
-from sqlalchemy import Integer
-from sqlalchemy import String
-from sqlalchemy.orm import declarative_base
-from sqlalchemy.orm import relationship
-from sqlalchemy import create_engine
+from database import db
+from json import JSONEncoder
 
-Base = declarative_base()
+class Trabajo(db.Model,JSONEncoder):
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    VIN = db.Column(db.String(16), unique=True, nullable=False)
+    nombre = db.Column(db.String(120), unique=False, nullable=False)
+    descripcion=db.Column(db.String(120), unique=False, nullable=False)
+    fechaInicio=db.Column(db.DateTime, nullable=True)
+    estado=db.Column(db.Enum('creado','planificado','iniciado','terminado'), nullable=False)
+    matricula = db.Column(db.String(7), nullable=True)
+    urgente = db.Column(db.Boolean, nullable=True)
 
-class estadosTrabajo (enum.Enum):
-    creado = "creado"
-    planificado = "planificado"
-    iniciado = "iniciado"
-    termiando = "terminado"
+    def __repr__(self):
+        return '"{id}":"{nombre}{descripcion}{VIN}{estado}{fechaInicio}{matricula}{urgente}"'.format(id=self.id, nombre=self.nombre, descripcion=self.descripcion, VIN=self.VIN,estado=self.estado,fechaInicio=self.fechaInicio,matricula=self.matricula,urgente=self.urgente)
+    def __init__(self, params):
+        self.VIN = params.get("VIN")
+        self.nombre = params.get("nombre")
+        self.descripcion=params.get("descripcion")
+        self.estado=params.get("estado")
+        self.fechaInicio=params.get("fechaInicio")
+        self.matricula=params.get("matricula")
+        self.urgente=params.get("urgente")
 
-class Trabajo(Base):
-    __tablename__ = "trabajo"
-
-    id = Column(Integer, primary_key=True)
-    vin = Column(String(30))
-    nombre = Column(String)
-    descripcion = Column(String)
-    fechaInicio = Column(date)
-    estado = Column(enum.Enum(estadosTrabajo))
-    matricula = Column(String)
-    urgente = Column(bool)
-
-#Terminar!!!!!
-def __repr__(self):
-    return f"Trabajo(id={self.id!r}, vin={self.vin!r}, nombre={self.nombre!r}, descripcion={self.description!r}, fechaInicio={self.fechaInicio!r}, estado={self.estado!r}, matricula={self.matricula!r}, urgente={self.urgente!r})"
-
-
-#Engine para la creación de conexiones con bases de datos, es una factoria.
-#engine = create_engine("sqlite://", echo=True, future=True)
+    

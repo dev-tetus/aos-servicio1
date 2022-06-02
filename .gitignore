@@ -1,3 +1,5 @@
 node_modules
 caddy_data
 vscode
+misDatos
+__pycache__

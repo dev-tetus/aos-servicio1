@@ -1,16 +1,13 @@
 from flask import Flask
 
-import database as db
 app = Flask(__name__)
+import database as db
 import routes #Registro de rutas
 
 @app.route('/')
 def index():
     return 'Hola!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
 
-@app.route('/trabajo')
-def get_trabajo():
-    return 'Trabajo'
 
 if __name__ == '__main__':
     print('INICIANDO DB')
