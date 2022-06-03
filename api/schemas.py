@@ -3,6 +3,7 @@ from json import JSONEncoder
 import datetime as dt
 
 class Trabajo(db.Model):
+    
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     VIN = db.Column(db.String(16), unique=True, nullable=False)
     nombre = db.Column(db.String(120), unique=False, nullable=False)
@@ -14,6 +15,7 @@ class Trabajo(db.Model):
 
     def __repr__(self):
         return '"{id}":"{nombre}{descripcion}{VIN}{estado}{fechaInicio}{matricula}{urgente}"'.format(id=self.id, nombre=self.nombre, descripcion=self.descripcion, VIN=self.VIN,estado=self.estado,fechaInicio=self.fechaInicio,matricula=self.matricula,urgente=self.urgente)
+    
     def __init__(self, params):
         self.VIN = params.get("VIN")
         self.nombre = params.get("nombre")
