@@ -1,7 +1,10 @@
 from __main__ import app
+
 from utils import utils as ut
 from flask import Response
 from flask import request
+from sqlalchemy import exc
+
 
 from controllers import controllerTrabajo
 
@@ -20,6 +23,9 @@ def trabajo():
         try:
             response = controllerTrabajo.add_trabajo_controller(ut.parse_json(request.data))
             return response
-        except:
-            return Response(status=400, response='Invalid params')
+        except exc.StatementError as e:
+            if e.orig.args[0] == 1062:
+                return Response(status=400, response='Datos duplicados')
+            else:
+                return str(e.orig)
 

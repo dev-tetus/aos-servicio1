@@ -22,13 +22,10 @@ def get_trabajo_controller(args):
         
 
 def add_trabajo_controller(params):
-    query_params = {}
     if len(params) > 0:
         trabajo = Trabajo(params)
         db.session.add(trabajo)
         db.session.commit()
-        return str(trabajo)
-        return trabajo.__repr__()
         return Response(status=200, response='Creado')
     else:
-        return params
+        return Response(status=400, response="Datos vacíos")
