@@ -62,11 +62,19 @@ nuestro sistema.
 
 ```bash
 export KUBECONFIG=<ruta_fichero>
-kubectl apply -f aos-deployment-production.yaml
 ```
 Los servicios quedan activos de tal manera que se pueda mantener la ip del servicio encargado de ser el punto de entrada
 como un API Gateway en el cluster mientras que los pods serán creados por los profesores de la asignatura con el fin de 
 probar el sistema.
+
+Para eliminar los Deployment con el fin de generar nuevos pods como Deployment, es necesario ejecutar este comando primero
+```bash
+kubectl delete --all deployments --namespace=default
+```
+A continuación
+```bash
+kubectl apply -f aos-deployment-production.yaml
+```
 
 - La interfaz para controlar la base de datos desde http://139.59.200.221/db/
 - La especificación de la API de trabajos será accesible desde http://139.59.200.221/
