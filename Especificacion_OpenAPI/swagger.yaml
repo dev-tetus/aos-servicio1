@@ -12,7 +12,7 @@ info:
     email: "soporte@tumecanico.com"
 
 servers:
-  - url: http://159.223.209.251/api/
+  - url: http://139.59.200.221/api/
 
 tags:
   - name: '🔨 Trabajo'

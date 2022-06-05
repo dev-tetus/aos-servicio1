@@ -3,3 +3,4 @@ SQLAlchemy==1.4.36
 PyMySQL==1.0.2
 Flask-SQLAlchemy==2.5.1
 flask-cors==3.0.10
+cryptography

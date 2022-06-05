@@ -1,0 +1,50 @@
+version: '3'
+
+services:
+  especificacion-imagen:
+    build:
+      context: ../Especificacion_OpenAPI
+      dockerfile: Dockerfile
+    container_name: especificacion-imagen
+  reverse-proxy: # NGINX
+    build:
+      context: ../nginx
+      dockerfile: Dockerfile
+    container_name: reverse-proxy-container 
+    depends_on:
+      - especificacion-imagen
+      - api-rest
+      - mysql-db
+      - phpmyadmin
+  api-rest:
+    build:
+      context: ../api
+      dockerfile: Dockerfile
+    container_name: api-rest
+    depends_on:
+      - mysql-db
+      - especificacion-imagen
+    environment:
+      HOST: db
+      DB_PASSWORD: root
+  mysql-db: 
+    image: mysql
+    container_name: db
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: trabajos
+    volumes:
+      - ./misDatos:/var/lib/mysql
+    ports:
+      - 6000:3306
+  phpmyadmin:
+    image: phpmyadmin
+    container_name: interfaz-db
+    restart: always
+    ports:
+      - 7000:80
+    environment: 
+      PMA_ABSOLUTE_URI: http://localhost/db
+

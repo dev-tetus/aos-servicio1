@@ -1,0 +1,281 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: reverse-proxy-container
+  labels:
+    app: reverse-proxy-container
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: reverse-proxy-container
+  template:
+    metadata:
+      labels:
+        app: reverse-proxy-container
+    spec:
+      containers:
+      - name: reverse-proxy-container
+        image: tetusrocus/proxy-aos
+        ports:
+        - containerPort: 80
+      restartPolicy: Always
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-rest
+  labels:
+    app: api-rest
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: api-rest
+  template:
+    metadata:
+      labels:
+        app: api-rest
+    spec:
+      containers:
+      - name: api-rest
+        image: tetusrocus/subsistema3
+        env:
+        - name: HOST
+          value: "db"
+        - name: DB_PASSWORD
+          value: "root"
+        ports:
+        - containerPort: 5000
+      restartPolicy: Always
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: especificacion-imagen
+  labels:
+    app: especificacion-imagen
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: especificacion-imagen
+  template:
+    metadata:
+      labels:
+        app: especificacion-imagen
+    spec:
+      containers:
+      - name: especificacion-imagen
+        image: tetusrocus/docs-aos
+        ports:
+        - containerPort: 8080
+      restartPolicy: Always
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: interfaz-db
+  labels:
+    app: interfaz-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: interfaz-db
+  template:
+    metadata:
+      labels:
+        app: interfaz-db
+    spec:
+      containers:
+      - name: interfaz-db
+        image: phpmyadmin
+        ports:
+        - containerPort: 80
+        env:
+          - name: PMA_ABSOLUTE_URI
+            value: http://139.59.200.221/db/
+      restartPolicy: Always
+---
+
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: mis-datos
+  labels:
+    type: local
+spec:
+  storageClassName: do-block-storage
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/tmp/data"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: "mis-datos-claim"
+spec:
+  accessModes:
+    - "ReadWriteOnce"
+  resources:
+    requests:
+      storage: "1Gi"
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: db
+spec:
+  selector:
+    matchLabels:
+      app: db
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: db
+    spec:
+      containers:
+        - image: mysql
+          name: mysql
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: root
+            - name: MYSQL_DATABASE
+              value: trabajos
+          ports:
+            - containerPort: 3306
+              name: mysql
+          volumeMounts:
+            - name: mis-datos
+              mountPath: /var/lib/mysql
+      volumes:
+        - name: mis-datos
+          persistentVolumeClaim:
+            claimName: mis-datos-claim
+# apiVersion: v1
+# kind: StatefulSet
+# metadata:
+#   name: db
+# spec:
+#   selector:
+#     matchLabels:
+#       app: db
+#   serviceName: "db"
+#   replicas: 1
+#   template:
+#     metadata:
+#       labels:
+#         app: db
+#     spec:
+#       containers:
+#       - name: database
+#         image: mysql
+#         env:
+#         - name: MYSQL_ROOT_PASSWORD
+#           value: "root"
+#         - name: MYSQL_DATABASE
+#           value: "trabajos"
+#         volumeMounts:
+#           - mountPath: "/var/lib/mysql"
+#             name: datos
+#       volumes:
+#           - name: mis-datos
+#             persistentVolumeClaim:
+#               claimName: mis-datos-claim
+#   # volumeClaimTemplates:
+#   # - metadata:
+#   #     name: datos
+#   #   spec:
+#   #     accessModes:
+#   #     - ReadWriteOnce
+#   #     resources:
+#   #       requests:
+#   #         storage: 1Gi
+#   #     storageClassName: "local-storage"
+#   #     path: /tmp/data
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: api-rest
+  labels:
+    app: api-rest
+spec:
+  type: LoadBalancer
+  ports:
+  - protocol: TCP
+    port: 5000
+    targetPort: 5000
+  selector:
+    app: api-rest
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: interfaz-db
+  labels:
+    app: interfaz-db
+spec:
+  type: LoadBalancer
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+  selector:
+    app: interfaz-db
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: especificacion-imagen
+  labels:
+    app: especificacion-imagen
+spec:
+  type: LoadBalancer
+  ports:
+  - protocol: TCP
+    port: 8080
+    targetPort: 8080
+  selector:
+    app: especificacion-imagen
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: reverse-proxy-container
+  labels:
+    app: reverse-proxy-container
+spec:
+  type: LoadBalancer
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+    nodePort: 30001
+  selector:
+    app: reverse-proxy-container
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: db
+  labels:
+    app: db
+spec:
+  clusterIP: None
+  ports:
+  - name: tcp
+    protocol: TCP
+    port: 3306
+    targetPort: 3306
+  selector:
+    app: db
