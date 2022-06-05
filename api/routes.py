@@ -30,17 +30,22 @@ def trabajo():
             else:
                 return str(e.orig)
     elif request.method == 'OPTIONS': 
-       pass
+       trabajoId
 
 @app.route('/trabajo/<int:trabajoId>', methods=['GET', 'DELETE', 'PUT', 'OPTIONS'])
-def trabajoId():
+def trabajoId(trabajoId):
 
     if request.method == 'GET':
-        args = request.args
-        return controllerTrabajo.get_trabajo_controller(args)
+        try: 
+            return controllerTrabajo.get_trabajo_controller(trabajoId)
+        except Exception as e: 
+            return str(e.__cause__)
+
     elif request.method == 'DELETE':
-        pass
+        return controllerTrabajo.delete_trabajo_controller(trabajoId)
+
     elif request.method == 'PUT':
-        pass
+        return controllerTrabajo.put_trabajo_controller(trabajoId,request)
+
     elif request.method == 'OPTIONS':
-        pass
+        return controllerTrabajo.optionsId_trabajo_controller(trabajoId)

@@ -14,8 +14,8 @@ class Trabajo(db.Model):
     urgente = db.Column(db.Boolean, nullable=True)
 
     def __repr__(self):
-        return '"{id}":"{nombre}{descripcion}{VIN}{estado}{fechaInicio}{matricula}{urgente}"'.format(id=self.id, nombre=self.nombre, descripcion=self.descripcion, VIN=self.VIN,estado=self.estado,fechaInicio=self.fechaInicio,matricula=self.matricula,urgente=self.urgente)
-    
+        return '"Id: {id}":"Nombre: {nombre}, descripcion: {descripcion}, VIN: {VIN}, estado: {estado}, fecha de inicio: {fechaInicio}, matricula: {matricula}, urgente: {urgente}"'.format(id=self.id, nombre=self.nombre, descripcion=self.descripcion, VIN=self.VIN,estado=self.estado,fechaInicio=self.fechaInicio,matricula=self.matricula,urgente=self.urgente)
+        
     def __init__(self, params):
         self.VIN = params.get("VIN")
         self.nombre = params.get("nombre")

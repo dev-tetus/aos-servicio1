@@ -1,11 +1,12 @@
 from flask_sqlalchemy import SQLAlchemy
 from __main__ import app
+import os
 
 config = {
-    'host': 'db',
+    'host': os.environ['HOST'],
     'port': '3306',
     'user': 'root',
-    'password': 'root',
+    'password': os.environ['DB_PASSWORD'],
     'database': 'trabajos'
 }
 db_user = config.get('user')

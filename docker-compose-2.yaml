@@ -44,6 +44,9 @@ services:
       - especificacion_imagen
     volumes:
       - ./api:/api
+    environment:
+      HOST: db
+      DB_PASSWORD: root
   mysql-db: 
     image: mysql
     container_name: db
