@@ -58,7 +58,7 @@ docker-compose up --build -d
 
 Para la implementación de los servicios en Kubernetes, hemos decidido contratar un cluster en Digital Ocean, de 1 nodo.
 Hemos creado un solo manifiesto en el que se declaran todos los Deployment, Services y PersitentVolumes utilizados por 
-nuestro sistema.
+nuestro sistema. Este fichero de configuración esta disponible para descargar desde el PDF de la memoria entregado en moodle.
 
 ```bash
 export KUBECONFIG=<ruta_fichero>
