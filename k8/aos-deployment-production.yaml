@@ -1,6 +1,167 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  name: facturas-dos
+  labels:
+    app: facturas-dos
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: facturas-dos
+  template:
+    metadata:
+      labels:
+        app: facturas-dos
+    spec:
+      containers:
+      - name: facturas-dos
+        image: eloz/grupo8facturas:latest
+        ports:
+        - containerPort: 80
+      restartPolicy: Always
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: logs
+  labels:
+    app: logs
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: logs
+  template:
+    metadata:
+      labels:
+        app: logs
+    spec:
+      containers:
+      - name: logs
+        image: alonsodinavarro/logs_api_equipo2:v1
+        ports:
+        - containerPort: 3000
+      restartPolicy: Always
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: recambios
+  labels:
+    app: recambios
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: recambios
+  template:
+    metadata:
+      labels:
+        app: recambios
+    spec:
+      containers:
+      - name: recambios
+        image: ghcr.io/adrianja5/aos-implementacion-servicio-recambios:latest
+        ports:
+        - containerPort: 8080
+      restartPolicy: Always
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vehiculos-dos
+  labels:
+    app: vehiculos-dos
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: vehiculos-dos
+  template:
+    metadata:
+      labels:
+        app: vehiculos-dos
+    spec:
+      containers:
+      - name: vehiculos-dos
+        image: albertoseijo/aos_grupo4_global:serviciovehiculos
+        ports:
+        - containerPort: 80
+      restartPolicy: Always
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: notificaciones
+  labels:
+    app: notificaciones
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: notificaciones
+  template:
+    metadata:
+      labels:
+        app: notificaciones
+    spec:
+      containers:
+      - name: notificaciones
+        image: enriquer47/api_notificaciones
+        ports:
+        - containerPort: 8080
+      restartPolicy: Always
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vehiculos
+  labels:
+    app: vehiculos
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: vehiculos
+  template:
+    metadata:
+      labels:
+        app: vehiculos
+    spec:
+      containers:
+      - name: vehiculos
+        image: esteban23/gestionvehiculosaos:v1
+        ports:
+        - containerPort: 5000
+      restartPolicy: Always
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: facturas
+  labels:
+    app: facturas
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: facturas
+  template:
+    metadata:
+      labels:
+        app: facturas
+    spec:
+      containers:
+      - name: facturas
+        image: mwan93/aos_servicio_facturas:v0.2
+        ports:
+        - containerPort: 4010
+      restartPolicy: Always
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
   name: reverse-proxy-container
   labels:
     app: reverse-proxy-container
@@ -161,47 +322,111 @@ spec:
         - name: mis-datos
           persistentVolumeClaim:
             claimName: mis-datos-claim
-# apiVersion: v1
-# kind: StatefulSet
-# metadata:
-#   name: db
-# spec:
-#   selector:
-#     matchLabels:
-#       app: db
-#   serviceName: "db"
-#   replicas: 1
-#   template:
-#     metadata:
-#       labels:
-#         app: db
-#     spec:
-#       containers:
-#       - name: database
-#         image: mysql
-#         env:
-#         - name: MYSQL_ROOT_PASSWORD
-#           value: "root"
-#         - name: MYSQL_DATABASE
-#           value: "trabajos"
-#         volumeMounts:
-#           - mountPath: "/var/lib/mysql"
-#             name: datos
-#       volumes:
-#           - name: mis-datos
-#             persistentVolumeClaim:
-#               claimName: mis-datos-claim
-#   # volumeClaimTemplates:
-#   # - metadata:
-#   #     name: datos
-#   #   spec:
-#   #     accessModes:
-#   #     - ReadWriteOnce
-#   #     resources:
-#   #       requests:
-#   #         storage: 1Gi
-#   #     storageClassName: "local-storage"
-#   #     path: /tmp/data
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: facturas-dos
+  labels:
+    app: facturas-dos
+spec:
+  type: LoadBalancer
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+  selector:
+    app: facturas-dos
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: logs
+  labels:
+    app: logs
+spec:
+  type: LoadBalancer
+  ports:
+  - protocol: TCP
+    port: 3000
+    targetPort: 3000
+  selector:
+    app: logs
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: recambios
+  labels:
+    app: recambios
+spec:
+  type: LoadBalancer
+  ports:
+  - protocol: TCP
+    port: 8080
+    targetPort: 8080
+  selector:
+    app: recambios
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: vehiculos-dos
+  labels:
+    app: vehiculos-dos
+spec:
+  type: LoadBalancer
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+  selector:
+    app: vehiculos-dos
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: notificaciones
+  labels:
+    app: notificaciones
+spec:
+  type: LoadBalancer
+  ports:
+  - protocol: TCP
+    port: 8080
+    targetPort: 8080
+  selector:
+    app: notificaciones
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: vehiculos
+  labels:
+    app: vehiculos
+spec:
+  type: LoadBalancer
+  ports:
+  - protocol: TCP
+    port: 5000
+    targetPort: 5000
+  selector:
+    app: vehiculos
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: facturas
+  labels:
+    app: facturas
+spec:
+  type: LoadBalancer
+  ports:
+  - protocol: TCP
+    port: 4010
+    targetPort: 4010
+  selector:
+    app: facturas
 ---
 apiVersion: v1
 kind: Service

@@ -1,6 +1,29 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  name: facturas
+  labels:
+    app: facturas
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: facturas
+  template:
+    metadata:
+      labels:
+        app: facturas
+    spec:
+      containers:
+      - name: facturas
+        image: mwan93/aos_servicio_facturas
+        ports:
+        - containerPort: 8000
+      restartPolicy: Always
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
   name: reverse-proxy-container
   labels:
     app: reverse-proxy-container
@@ -160,47 +183,7 @@ spec:
         - name: mis-datos
           persistentVolumeClaim:
             claimName: mis-datos-claim
-# apiVersion: v1
-# kind: StatefulSet
-# metadata:
-#   name: db
-# spec:
-#   selector:
-#     matchLabels:
-#       app: db
-#   serviceName: "db"
-#   replicas: 1
-#   template:
-#     metadata:
-#       labels:
-#         app: db
-#     spec:
-#       containers:
-#       - name: database
-#         image: mysql
-#         env:
-#         - name: MYSQL_ROOT_PASSWORD
-#           value: "root"
-#         - name: MYSQL_DATABASE
-#           value: "trabajos"
-#         volumeMounts:
-#           - mountPath: "/var/lib/mysql"
-#             name: datos
-#       volumes:
-#           - name: mis-datos
-#             persistentVolumeClaim:
-#               claimName: mis-datos-claim
-#   # volumeClaimTemplates:
-#   # - metadata:
-#   #     name: datos
-#   #   spec:
-#   #     accessModes:
-#   #     - ReadWriteOnce
-#   #     resources:
-#   #       requests:
-#   #         storage: 1Gi
-#   #     storageClassName: "local-storage"
-#   #     path: /tmp/data
+
 ---
 apiVersion: v1
 kind: Service
