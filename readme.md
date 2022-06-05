@@ -41,3 +41,40 @@ http://localhost:80/api/
 ```
    [swagger-ui-express]: <https://www.npmjs.com/package/swagger-ui-express>
    
+
+# Parte 2
+
+Para la implementación con docker-compose, utilizamos una imagen de un servidor nginx que actúa como enrutador de servicios,
+para levantar estos contenedores habría que jecutar los siguientes comandos:
+```bash
+cd k8
+```
+```bash
+docker-compose up --build -d
+```
+- La especificación de la API será accesible desde http://localhost/
+- Los endpoints de la API desde http://localhost/api
+- La interfaz para controlar la base de datos desde http://localhost/db
+
+Para la implementación de los servicios en Kubernetes, hemos decidido contratar un cluster en Digital Ocean, de 1 nodo.
+Hemos creado un solo manifiesto en el que se declaran todos los Deployment, Services y PersitentVolumes utilizados por 
+nuestro sistema.
+
+```bash
+export KUBECONFIG=<ruta_fichero>
+kubectl apply -f aos-deployment-production.yaml
+```
+Los servicios quedan activos de tal manera que se pueda mantener la ip del servicio encargado de ser el punto de entrada
+como un API Gateway en el cluster mientras que los pods serán creados por los profesores de la asignatura con el fin de 
+probar el sistema.
+
+- La interfaz para controlar la base de datos desde http://139.59.200.221/db/
+- La especificación de la API de trabajos será accesible desde http://139.59.200.221/
+- La api del sistema de trabajos desde http://139.59.200.221/api
+- La api del sistema de facturas desde http://139.59.200.221/facturas
+- La api del sistema de facturas dos desde http://139.59.200.221/facturas-dos
+- La api del sistema de notificaciones desde http://139.59.200.221/notificaciones
+- La api del sistema de vehiculos desde http://139.59.200.221/vehiculos
+- La api del sistema de vehiculos-dos desde http://139.59.200.221/vehiculos-dos
+- La api del sistema de logs desde http://139.59.200.221/logs
+- La api del sistema de recambios desde http://139.59.200.221/recambios
