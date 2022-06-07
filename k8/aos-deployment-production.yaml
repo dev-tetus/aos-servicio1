@@ -330,7 +330,6 @@ metadata:
   labels:
     app: facturas-dos
 spec:
-  type: LoadBalancer
   ports:
   - protocol: TCP
     port: 80
@@ -345,7 +344,6 @@ metadata:
   labels:
     app: logs
 spec:
-  type: LoadBalancer
   ports:
   - protocol: TCP
     port: 3000
@@ -360,7 +358,6 @@ metadata:
   labels:
     app: recambios
 spec:
-  type: LoadBalancer
   ports:
   - protocol: TCP
     port: 8080
@@ -375,7 +372,6 @@ metadata:
   labels:
     app: vehiculos-dos
 spec:
-  type: LoadBalancer
   ports:
   - protocol: TCP
     port: 80
@@ -390,7 +386,6 @@ metadata:
   labels:
     app: notificaciones
 spec:
-  type: LoadBalancer
   ports:
   - protocol: TCP
     port: 8080
@@ -405,7 +400,6 @@ metadata:
   labels:
     app: vehiculos
 spec:
-  type: LoadBalancer
   ports:
   - protocol: TCP
     port: 5000
@@ -420,7 +414,6 @@ metadata:
   labels:
     app: facturas
 spec:
-  type: LoadBalancer
   ports:
   - protocol: TCP
     port: 4010
@@ -435,7 +428,6 @@ metadata:
   labels:
     app: api-rest
 spec:
-  type: LoadBalancer
   ports:
   - protocol: TCP
     port: 5000
@@ -450,7 +442,6 @@ metadata:
   labels:
     app: interfaz-db
 spec:
-  type: LoadBalancer
   ports:
   - protocol: TCP
     port: 80
@@ -465,7 +456,6 @@ metadata:
   labels:
     app: especificacion-imagen
 spec:
-  type: LoadBalancer
   ports:
   - protocol: TCP
     port: 8080
