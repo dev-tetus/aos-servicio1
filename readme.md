@@ -62,7 +62,7 @@ nuestro sistema. Este fichero de configuración esta disponible para descargar d
 desde la propia entrega de moodle con el nombre 'aos-kubeconfig.yaml'.
 
 ```bash
-export KUBECONFIG=<ruta_fichero>
+export KUBECONFIG=<ruta_fichero_absoluto>
 ```
 Los servicios quedan activos de tal manera que se pueda mantener la ip del servicio encargado de ser el punto de entrada
 como un API Gateway en el cluster mientras que los pods serán creados por los profesores de la asignatura con el fin de 
@@ -77,13 +77,13 @@ A continuación
 kubectl apply -f aos-deployment-production.yaml
 ```
 
-- La interfaz para controlar la base de datos desde http://139.59.200.221/db/
-- La especificación de la API de trabajos será accesible desde http://139.59.200.221/
-- La api del sistema de trabajos desde http://139.59.200.221/api
-- La api del sistema de facturas desde http://139.59.200.221/facturas
-- La api del sistema de facturas dos desde http://139.59.200.221/facturas-dos
-- La api del sistema de notificaciones desde http://139.59.200.221/notificaciones
-- La api del sistema de vehiculos desde http://139.59.200.221/vehiculos
-- La api del sistema de vehiculos-dos desde http://139.59.200.221/vehiculos-dos
-- La api del sistema de logs desde http://139.59.200.221/logs
-- La api del sistema de recambios desde http://139.59.200.221/recambios
+- La interfaz para controlar la base de datos desde http://159.65.210.29/db/
+- La especificación de la API de trabajos será accesible desde http://159.65.210.29/
+- La api del sistema de trabajos desde http://159.65.210.29/api
+- La api del sistema de facturas desde http://159.65.210.29/facturas
+- La api del sistema de facturas dos desde http://159.65.210.29/facturas-dos
+- La api del sistema de notificaciones desde http://159.65.210.29/notificaciones
+- La api del sistema de vehiculos desde http://159.65.210.29/vehiculos
+- La api del sistema de vehiculos-dos desde http://159.65.210.29/vehiculos-dos
+- La api del sistema de logs desde http://159.65.210.29/logs
+- La api del sistema de recambios desde http://159.65.210.29/recambios
